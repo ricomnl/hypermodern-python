@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "hypermodern-python"
+version = "0.1.0"
+authors = ["Rico Meinl <rmeinl97@gmail.com>"]
+description = "The hypermodern Python project"
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/rmeinl/hypermodern-python"
+repository = "https://github.com/rmeinl/hypermodern-python"
+keywords = ["hypermodern"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+click = "^7.1.2"
+requests = "^2.24.0"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+hypermodern-python = 'hypermodern_python.console:main'
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
