@@ -1,29 +1,31 @@
 # src/hypermodern_python/console.py
+import locale
 import textwrap
 
-
 import click
-import requests
-import locale
 
 # from hypermodern_python import __version__
-from . import __version__
+from . import __version__, wikipedia
+
+
+def get_locale() -> str:
+
+    return locale.getlocale()[0][:2] or "en"
 
 
 @click.command()
-@click.option('--lang', default=locale.getlocale()[0][:2], help='Language setting')
+@click.option(
+    "--language",
+    "-l",
+    default=get_locale(),
+    metavar="LANG",
+    help="Language setting of Wikipedia",
+    show_default=True,
+)
 @click.version_option(version=__version__)
-def main(lang: str):
-    API_URL = f"https://{lang}.wikipedia.org/api/rest_v1/page/random/summary"
-
+def main(language: str):
     """ The hypermodern python project """
-    try:
-        with requests.get(API_URL) as response:
-            response.raise_for_status()
-            data = response.json()
-    except requests.exceptions.RequestException as e:
-        click.secho("Whoops. This did not work.", fg="red")
-        raise SystemExit(e)
+    data = wikipedia.random_page(language=language)
 
     title = data["title"]
     extract = data["extract"]
